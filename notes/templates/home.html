@@ -22,7 +22,8 @@
           <div id="note-{{ note.id }}" class="note-content" style="max-height: 5em; overflow: hidden;">
             <p class="card-text">{{ note.content|linebreaksbr }}</p>
           </div>
-          <button class="btn btn-sm btn-primary mt-2" onclick="toggleNote({{ note.id }})">Open</button>
+          <button class="btn btn-sm btn-primary mt-2" onclick="toggleNote({{ note.id }}, this)">Open</button>
+          <a href="{% url 'edit_note' note.id %}" class="btn btn-sm btn-warning mt-2">Edit</a>
           {% else %}
           <ul>
             {% for item in note.content.splitlines %}
@@ -51,9 +52,8 @@
 {% endif %}
 
 <script>
-  function toggleNote(id) {
+  function toggleNote(id, btn) {
     const el = document.getElementById(`note-${id}`);
-    const btn = event.target;
     if (el.style.maxHeight === "none") {
       el.style.maxHeight = "5em";
       btn.innerText = "Open";
